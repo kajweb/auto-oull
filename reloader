@@ -1,0 +1,15 @@
+<?php
+$pidFile = "log/server.pid";
+
+if(!file_exists($pidFile)){
+    echo "pid file :{$pidFile} not exist \n";
+    return false;
+}
+
+$pid = file_get_contents($pidFile);
+if(!swoole_process::kill($pid,0)){
+    echo "pid :{$pid} not exist \n";
+    return false;
+}
+
+swoole_process::kill($pid,SIGUSR1);
